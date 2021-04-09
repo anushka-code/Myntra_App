@@ -8,6 +8,7 @@ import 'package:Myntra_App/screens/profile/profile_screen.dart';
 import 'package:Myntra_App/screens/sign_in/sign_in_screen.dart';
 import 'package:Myntra_App/screens/splash/splash_screen.dart';
 import 'package:Myntra_App/screens/try_on/try_on_screen.dart';
+import 'package:Myntra_App/screens/try_on/components/round_trip.dart';
 import 'screens/sign_up/sign_up_screen.dart';
 
 // We use name route
@@ -23,4 +24,5 @@ final Map<String, WidgetBuilder> routes = {
   CartScreen.routeName: (context) => CartScreen(),
   TryOnScreen.routeName: (context) => TryOnScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
+  RoundTrip.routeName: (context) => RoundTrip(),
 };
