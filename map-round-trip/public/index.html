@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Demo: Generate an optimized route with the Optimization API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0px;
+        left: 0px;
+        background: black;
+      }
+
+      .truck2 {
+        width: 0px;
+        height: 0px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        background: #3887be;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" style="margin: 0;">
+      <div class="navbar">
+        <nav style="background-color:rgba(43, 42, 40, 0.521); height: 30px; padding: 20px; border-radius: 0px 0px 30px 30px;">
+          <a href="/lab6.html" style="color: rgb(255, 255, 255); font-weight: bold; font-size: xx-large; font-family: monospace; text-decoration: none;">HOME</a>
+          <a href="/lab6AboutMe.html " style="color: rgb(255, 255, 255); font-weight: bold; font-size: xx-large; font-family: monospace; text-decoration: none;float: right; margin-right: 10px;">Explore</a>
+          <a href="/lab6Music.html " style="color: rgb(255, 255, 255); font-weight: bold; font-size: xx-large; font-family: monospace; text-decoration: none;float: right; margin-right: 30px;">Music</a>
+          <a href="/lab6Cooking.html " style="color: rgb(255, 255, 255); font-weight: bold; font-size: xx-large; font-family: monospace; text-decoration: none;float: right; margin-right: 30px;">Cooking</a>
+        </nav>
+      </div>
+      <div style="align-items: center;">
+        <div style="margin: 20px; width:500px; height: 500px;" id="map" ></div>
+      </div>
+    </div>
+    <script>
+      var truckLocation = [73.87978800671897, 18.51457397919691];
+      var warehouseLocation = [73.87978800671897, 18.51457397919691];
+      var lastQueryTime = 0;
+      var lastAtRestaurant = 0;
+      var keepTrack = [];
+      var currentSchedule = [];
+      var currentRoute = null;
+      var pointHopper = {};
+      var pause = true;
+      var speedFactor = 50;
+
+      // Add your access token
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhcm1pMjcwMSIsImEiOiJja242YjB0Y3AwY2dzMnhwOXN2ZW1hMmFvIn0.Cqz4wE4a6HiIiBgkoyYJyQ';
+
+      // Initialize a map
+      var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/mapbox/light-v10', // stylesheet location
+        center: truckLocation, // starting position
+        zoom: 12 // starting zoom
+      });
+
+      var warehouse = turf.featureCollection([turf.point(warehouseLocation)]);
+
+      // Create an empty GeoJSON feature collection for drop off locations
+      var dropoffs = turf.featureCollection([]);
+
+      // Create an empty GeoJSON feature collection, which will be used as the data source for the route before users add any new data
+      var nothing = turf.featureCollection([]);
+
+      map.on('load', function () {
+        var marker = document.createElement('div');
+        marker.classList = 'truck';
+
+        // Create a new marker
+        truckMarker = new mapboxgl.Marker(marker)
+          .setLngLat(truckLocation)
+          .addTo(map);
+
+        // Create a circle layer
+        map.addLayer({
+          id: 'warehouse',
+          type: 'circle',
+          source: {
+            data: warehouse,
+            type: 'geojson'
+          },
+          paint: {
+            'circle-radius': 20,
+            'circle-color': 'white',
+            'circle-stroke-color': '#3887be',
+            'circle-stroke-width': 3
+          }
+        });
+
+        // Create a symbol layer on top of circle layer
+        map.addLayer({
+          id: 'warehouse-symbol',
+          type: 'symbol',
+          source: {
+            data: warehouse,
+            type: 'geojson'
+          },
+          layout: {
+            'icon-image': 'shop-15',
+            'icon-size': 1
+          },
+          paint: {
+            'text-color': '#3887be'
+          }
+        });
+
+        map.addLayer({
+          id: 'dropoffs-symbol',
+          type: 'symbol',
+          source: {
+            data: dropoffs,
+            type: 'geojson'
+          },
+          layout: {
+            'icon-allow-overlap': true,
+            'icon-ignore-placement': true,
+            'icon-image': 'grocery-15',
+            'icon-size': 1.5
+          }
+        });
+
+        map.addSource('route', {
+          type: 'geojson',
+          data: nothing
+        });
+
+        map.addLayer(
+          {
+            id: 'routeline-active',
+            type: 'line',
+            source: 'route',
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            paint: {
+              'line-color': '#3887be',
+              'line-width': ['interpolate', ['linear'], ['zoom'], 12, 3, 22, 12]
+            }
+          },
+          'waterway-label'
+        );
+
+        map.addLayer(
+          {
+            id: 'routearrows',
+            type: 'symbol',
+            source: 'route',
+            layout: {
+              'symbol-placement': 'line',
+              'text-field': '▶',
+              'text-size': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                12,
+                24,
+                22,
+                60
+              ],
+              'symbol-spacing': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                12,
+                30,
+                22,
+                160
+              ],
+              'text-keep-upright': false
+            },
+            paint: {
+              'text-color': '#3887be',
+              'text-halo-color': 'hsl(55, 11%, 96%)',
+              'text-halo-width': 3
+            }
+          },
+          'waterway-label'
+        );
+
+        // Listen for a click on the map
+        map.on('click', function (e) {
+          // When the map is clicked, add a new drop off point
+          // and update the `dropoffs-symbol` layer
+          newDropoff(map.unproject(e.point));
+          //console.log(map.unproject(e.point));
+          updateDropoffs(dropoffs);
+        });
+      });
+
+      function newDropoff(coords) {
+        // Store the clicked point as a new GeoJSON feature with
+        // two properties: `orderTime` and `key`
+        var pt = turf.point([coords.lng, coords.lat], {
+          orderTime: Date.now(),
+          key: Math.random()
+        });
+        dropoffs.features.push(pt);
+        pointHopper[pt.properties.key] = pt;
+
+        // Make a request to the Optimization API
+        $.ajax({
+          method: 'GET',
+          url: assembleQueryURL()
+        }).done(function (data) {
+          // Create a GeoJSON feature collection
+          var routeGeoJSON = turf.featureCollection([
+            turf.feature(data.trips[0].geometry)
+          ]);
+
+          // If there is no route provided, reset
+          if (!data.trips[0]) {
+            routeGeoJSON = nothing;
+          } else {
+            // Update the `route` source by getting the route source
+            // and setting the data equal to routeGeoJSON
+            map.getSource('route').setData(routeGeoJSON);
+          }
+
+          //
+          if (data.waypoints.length === 12) {
+            window.alert(
+              'Maximum number of points reached. Read more at docs.mapbox.com/api/navigation/#optimization.'
+            );
+          }
+        });
+      }
+
+      function updateDropoffs(geojson) {
+        map.getSource('dropoffs-symbol').setData(geojson);
+      }
+
+      // Here you'll specify all the parameters necessary for requesting a response from the Optimization API
+      function assembleQueryURL() {
+        // Store the location of the truck in a variable called coordinates
+        var coordinates = [truckLocation];
+        var distributions = [];
+        keepTrack = [truckLocation];
+
+        // Create an array of GeoJSON feature collections for each point
+        var restJobs = objectToArray(pointHopper);
+
+        // If there are actually orders from this restaurant
+        if (restJobs.length > 0) {
+          // Check to see if the request was made after visiting the restaurant
+          var needToPickUp =
+            restJobs.filter(function (d, i) {
+              return d.properties.orderTime > lastAtRestaurant;
+            }).length > 0;
+
+          // If the request was made after picking up from the restaurant,
+          // Add the restaurant as an additional stop
+          if (needToPickUp) {
+            var restaurantIndex = coordinates.length;
+            // Add the restaurant as a coordinate
+            coordinates.push(warehouseLocation);
+            // push the restaurant itself into the array
+            keepTrack.push(pointHopper.warehouse);
+          }
+
+          restJobs.forEach(function (d, i) {
+            // Add dropoff to list
+            keepTrack.push(d);
+            coordinates.push(d.geometry.coordinates);
+            // if order not yet picked up, add a reroute
+            if (needToPickUp && d.properties.orderTime > lastAtRestaurant) {
+              distributions.push(
+                restaurantIndex + ',' + (coordinates.length - 1)
+              );
+            }
+          });
+        }
+
+        // Set the profile to `driving`
+        // Coordinates will include the current location of the truck,
+        return (
+          'https://api.mapbox.com/optimized-trips/v1/mapbox/driving/' +
+          coordinates.join(';') +
+          '?distributions=' +
+          distributions.join(';') +
+          '&overview=full&steps=true&geometries=geojson&source=first&access_token=' +
+          mapboxgl.accessToken
+        );
+      }
+
+      function objectToArray(obj) {
+        var keys = Object.keys(obj);
+        var routeGeoJSON = keys.map(function (key) {
+          return obj[key];
+        });
+        return routeGeoJSON;
+      }
+    </script>
+  </body>
+</html>
