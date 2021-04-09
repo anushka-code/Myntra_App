@@ -40,11 +40,11 @@
     <div class="container" style="margin: 0;">
       <div class="navbar">
         <nav style="background-color:rgba(43, 42, 40, 0.521); height: 30px; padding: 20px; border-radius: 0px 0px 30px 30px;">
-          <a href="" style="color: rgb(255, 255, 255); font-weight: bold; font-size: xx-large; font-family: monospace; text-decoration: none;">Maps Round Trip</a>
+          <a href="" style="color: rgb(255, 255, 255); font-weight: bold; font-size: xx-large; font-family: monospace; text-decoration: none;">Your One Day Tour</a>
         </nav>
       </div>
       <div style="align-items: center;">
-        <div style="margin: 20px; width:100%; height: 100%; margin-top: 100px;" id="map" ></div>
+        <div style="width:100%; height: 100%; margin-top: 80px;" id="map" ></div>
       </div>
     </div>
     <script>
@@ -195,13 +195,25 @@
         );
 
         // Listen for a click on the map
-        map.on('click', function (e) {
-          // When the map is clicked, add a new drop off point
-          // and update the `dropoffs-symbol` layer
-          newDropoff(map.unproject(e.point));
-          //console.log(map.unproject(e.point));
-          updateDropoffs(dropoffs);
-        });
+        // map.on('click', function (e) {
+        //   // When the map is clicked, add a new drop off point
+        //   // and update the `dropoffs-symbol` layer
+        //   newDropoff(map.unproject(e.point));
+        //   //console.log(map.unproject(e.point));
+        //   updateDropoffs(dropoffs);
+        // });
+
+        //Add static shop locations and paths
+        //newDropoff({lng:73.87017,lat:18.52084});
+        //updateDropoffs(dropoffs);
+        newDropoff({lng:73.84236,lat:18.51384});
+        updateDropoffs(dropoffs);
+        newDropoff({lng:73.85884,lat:18.49756});
+        updateDropoffs(dropoffs);
+        newDropoff({lng:73.85060,lat:18.52930});
+        updateDropoffs(dropoffs);
+        //newDropoff({lng:73.88391,lat:18.51399});
+        //updateDropoffs(dropoffs);
       });
 
       function newDropoff(coords) {
@@ -306,6 +318,7 @@
         });
         return routeGeoJSON;
       }
+      
     </script>
   </body>
 </html>
