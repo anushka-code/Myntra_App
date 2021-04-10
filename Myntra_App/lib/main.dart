@@ -3,10 +3,33 @@ import 'package:Myntra_App/routes.dart';
 import 'package:Myntra_App/screens/profile/profile_screen.dart';
 import 'package:Myntra_App/screens/splash/splash_screen.dart';
 import 'package:Myntra_App/theme.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'screens/home/home_screen.dart';
 
-void main() {
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var initializationSettingsAndroid =
+      AndroidInitializationSettings('myntra_logo');
+  // var initializationSettingsIOS = IOSInitializationSettings(
+  //     requestAlertPermission: true,
+  //     requestBadgePermission: true,
+  //     requestSoundPermission: true,
+  //     onDidReceiveLocalNotification:
+  //         (int id, String title, String body, String payload) async {});
+  // var initializationSettings = InitializationSettings(
+  //     initializationSettingsAndroid, initializationSettingsIOS);
+  final initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+      onSelectNotification: (String payload) async {
+    if (payload != null) {
+      debugPrint('Notification payload: ' + payload);
+    }
+  });
   runApp(MyApp());
 }
 
