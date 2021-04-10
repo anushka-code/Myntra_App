@@ -57,11 +57,7 @@ class MapCard extends StatelessWidget {
                   icon: Icon(Icons.arrow_forward_ios),
                   // size: 12,
                   color: kTextColor,
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    RoundTrip.routeName,
-                    // arguments: WebViewURL(this.url),
-                  ),
+                  onPressed: () {},
                 )
               ],
             ),
@@ -84,7 +80,13 @@ class MapCard extends StatelessWidget {
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
                     text: "Start",
-                    press: () {},
+                    press: () {
+                      Navigator.pushNamed(
+                        context,
+                        RoundTrip.routeName,
+                        // arguments: WebViewURL(this.url),
+                      );
+                    },
                   ),
                 ),
               ],
