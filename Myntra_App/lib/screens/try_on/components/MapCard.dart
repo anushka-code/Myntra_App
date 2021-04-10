@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Myntra_App/components/default_button.dart';
+import 'package:Myntra_App/screens/try_on/components/round_trip.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -9,7 +10,7 @@ class MapCard extends StatelessWidget {
   const MapCard({
     Key key,
   }) : super(key: key);
-
+  //final String url = 'https://maps-round-trip.web.app/';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,10 +53,15 @@ class MapCard extends StatelessWidget {
                 Spacer(),
                 Text("1-Day Tour"),
                 const SizedBox(width: 10),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
+                IconButton(
+                  icon: Icon(Icons.arrow_forward_ios),
+                  // size: 12,
                   color: kTextColor,
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    RoundTrip.routeName,
+                    // arguments: WebViewURL(this.url),
+                  ),
                 )
               ],
             ),

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:Myntra_App/constants.dart';
 import 'package:Myntra_App/screens/sign_in/sign_in_screen.dart';
 import 'package:Myntra_App/size_config.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // This is the best practice
+import '../../../main.dart';
 import '../components/splash_content.dart';
 import '../../../components/default_button.dart';
 
@@ -70,6 +72,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Continue",
                       press: () {
+                        showNotification();
                         Navigator.pushNamed(context, SignInScreen.routeName);
                       },
                     ),
@@ -95,5 +98,22 @@ class _BodyState extends State<Body> {
         borderRadius: BorderRadius.circular(3),
       ),
     );
+  }
+
+  void showNotification() async {
+    var notificationTime = DateTime.now().add(Duration(seconds: 10));
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'loc_notification', 'loc_notification', 'Store nearby notification',
+        icon: 'myntra_logo',
+        sound: RawResourceAndroidNotificationSound('notification'),
+        largeIcon: DrawableResourceAndroidBitmap('myntra_logo'));
+    var platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        0,
+        'Tryon Nearby',
+        'An item you want to try-on is nearby. Visiting?',
+        platformChannelSpecifics,
+        payload: 'item x');
   }
 }
