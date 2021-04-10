@@ -24,6 +24,11 @@ class HomeHeader extends StatelessWidget {
         children: [
           SearchField(),
           IconBtnWithCounter(
+            svgSrc: "assets/icons/try_on.svg",
+            numOfitem: tryOnProducts.length,
+            press: () => Navigator.pushNamed(context, TryOnScreen.routeName), 
+          ),
+          IconBtnWithCounter(
             svgSrc: "assets/icons/shop.svg",
             numOfitem: offlineProducts.length,
             press: () => Navigator.pushNamed(context, OfflineCheckOut.routeName),
@@ -33,11 +38,7 @@ class HomeHeader extends StatelessWidget {
             numOfitem: demoCarts.length,
             press: () => Navigator.pushNamed(context, CartScreen.routeName),
           ),
-          IconBtnWithCounter(
-            svgSrc: "assets/icons/try_on.svg",
-            numOfitem: tryOnProducts.length,
-            press: () => Navigator.pushNamed(context, TryOnScreen.routeName), 
-          ),
+          
         ],
       ),
     );
