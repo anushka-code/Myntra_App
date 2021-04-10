@@ -36,7 +36,7 @@ These are a few animations to show how the features work.
 | ![](/demo_gifs/analytics.gif) |
 | Notifications                       |
 | ------------------------------------|
-| ![](/demo_gifs/notification.gif) |
+| ![]<img src="/demo_gifs/notification.gif" width="400" height="790"/> |
 
 
 To run this project locally, clone it in your working directory, run `flutter pub get` or Get packages from pubspec.yaml and you are good to go!
