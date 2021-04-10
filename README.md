@@ -34,7 +34,6 @@ These are a few animations to show how the features work.
 | Analytics                            |
 | ------------------------------------ |
 | <img src="/demo_gifs/analytics.gif" width="850" height="500"/> |
-| ------------------------------------ |
 
 
 
