@@ -32,7 +32,9 @@ These are a few animations to show how the features work.
 | <img src="/demo_gifs/map.gif" width="350" height="790"/> | <img src="/demo_gifs/notification.gif" width="350" height="790"/> |
 
 | Analytics                            |
+| ------------------------------------ |
 | <img src="/demo_gifs/analytics.gif" width="850" height="500"/> |
+| ------------------------------------ |
 
 
 
