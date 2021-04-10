@@ -72,7 +72,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Continue",
                       press: () {
-                        showNotification();
+                        
                         Navigator.pushNamed(context, SignInScreen.routeName);
                       },
                     ),
@@ -100,20 +100,4 @@ class _BodyState extends State<Body> {
     );
   }
 
-  void showNotification() async {
-    var notificationTime = DateTime.now().add(Duration(seconds: 10));
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'loc_notification', 'loc_notification', 'Store nearby notification',
-        icon: 'myntra_logo',
-        sound: RawResourceAndroidNotificationSound('notification'),
-        largeIcon: DrawableResourceAndroidBitmap('myntra_logo'));
-    var platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-        0,
-        'Tryon Nearby',
-        'An item you want to try-on is nearby. Visiting?',
-        platformChannelSpecifics,
-        payload: 'item x');
-  }
 }
