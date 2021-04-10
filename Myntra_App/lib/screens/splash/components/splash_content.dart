@@ -28,11 +28,14 @@ class SplashContent extends StatelessWidget {
           text,
           textAlign: TextAlign.center,
         ),
-        Spacer(flex: 2),
-        Image.asset(
-          image,
-          height: getProportionateScreenHeight(265),
-          width: getProportionateScreenWidth(235),
+       
+        Container(
+          margin: EdgeInsets.only(top: 70),
+          child: Image.asset(
+            image,
+            height: getProportionateScreenHeight(350),
+            width: getProportionateScreenWidth(350),
+          ),
         ),
       ],
     );

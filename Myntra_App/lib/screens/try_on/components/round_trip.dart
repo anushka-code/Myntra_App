@@ -20,7 +20,9 @@ class _RoundTripState extends State<RoundTrip> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text("1-Day Tour" ,style: TextStyle(color: Colors.black),),
+        ),
         body: Column(
           children: [
             Expanded(

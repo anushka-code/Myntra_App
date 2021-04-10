@@ -1,5 +1,6 @@
 import 'package:Myntra_App/models/Cart.dart';
 import 'package:Myntra_App/models/Product.dart';
+import 'package:Myntra_App/screens/offline_check_out/offlineCart.dart';
 import 'package:Myntra_App/screens/try_on/try_on_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Myntra_App/screens/cart/cart_screen.dart';
@@ -23,17 +24,21 @@ class HomeHeader extends StatelessWidget {
         children: [
           SearchField(),
           IconBtnWithCounter(
+            svgSrc: "assets/icons/try_on.svg",
+            numOfitem: tryOnProducts.length,
+            press: () => Navigator.pushNamed(context, TryOnScreen.routeName), 
+          ),
+          IconBtnWithCounter(
+            svgSrc: "assets/icons/shop.svg",
+            numOfitem: offlineProducts.length,
+            press: () => Navigator.pushNamed(context, OfflineCheckOut.routeName),
+          ),
+          IconBtnWithCounter(
             svgSrc: "assets/icons/Cart Icon.svg",
             numOfitem: demoCarts.length,
             press: () => Navigator.pushNamed(context, CartScreen.routeName),
           ),
-          IconBtnWithCounter(
-            svgSrc: "assets/icons/try_on.svg",
-            numOfitem: tryOnProducts.length,
-            press: () => Navigator.pushNamed(context, TryOnScreen.routeName),
-           
-            
-          ),
+          
         ],
       ),
     );
