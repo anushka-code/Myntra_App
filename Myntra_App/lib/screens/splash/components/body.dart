@@ -16,17 +16,17 @@ class _BodyState extends State<Body> {
   int currentPage = 0;
   List<Map<String, String>> splashData = [
     {
-      "text": "Welcome to Tokoto, Let’s shop!",
-      "image": "assets/images/splash_1.png"
+      "text": "Welcome to Myntra, Let's shop!",
+      "image": "assets/images/main1.png"
     },
     {
       "text":
-          "We help people conect with store \naround United State of America",
-      "image": "assets/images/splash_2.png"
+          "Myntra now provides smooth transition between online discovery and offline purchase",
+      "image": "assets/images/fea1.png"
     },
     {
-      "text": "We show the easy way to shop. \nJust stay at home with us",
-      "image": "assets/images/splash_3.png"
+      "text": "We make it easy to buy what you want, \nwhen you want it, how you want to buy it",
+      "image": "assets/images/fea2.png"
     },
   ];
   @override
@@ -37,7 +37,7 @@ class _BodyState extends State<Body> {
         child: Column(
           children: <Widget>[
             Expanded(
-              flex: 3,
+              flex: 4,
               child: PageView.builder(
                 onPageChanged: (value) {
                   setState(() {

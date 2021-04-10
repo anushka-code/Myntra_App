@@ -1,4 +1,5 @@
 import 'package:Myntra_App/screens/offline/offline.dart';
+import 'package:Myntra_App/screens/offline_check_out/offlineCart.dart';
 import 'package:flutter/widgets.dart';
 import 'package:Myntra_App/screens/cart/cart_screen.dart';
 import 'package:Myntra_App/screens/details/details_screen.dart';
@@ -23,4 +24,5 @@ final Map<String, WidgetBuilder> routes = {
   CartScreen.routeName: (context) => CartScreen(),
   TryOnScreen.routeName: (context) => TryOnScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
+  OfflineCheckOut.routeName: (context) => OfflineCheckOut(),
 };

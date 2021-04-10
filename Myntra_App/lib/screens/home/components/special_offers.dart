@@ -26,7 +26,7 @@ class SpecialOffers extends StatelessWidget {
           child: Row(
             children: [
               SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
+                image: "assets/images/ban1.jpg",
                 category: "Women",
                 numOfBrands: 18,
                 press: () {},
@@ -66,15 +66,17 @@ class SpecialOfferCard extends StatelessWidget {
       child: GestureDetector(
         onTap: press,
         child: SizedBox(
-          width: getProportionateScreenWidth(242),
-          height: getProportionateScreenWidth(100),
+          width: getProportionateScreenWidth(190),
+          height: getProportionateScreenWidth(90),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Stack(
               children: [
-                Image.asset(
-                  image,
-                  fit: BoxFit.cover,
+                Center(
+                  child: Image.asset(
+                    image,
+                    fit: BoxFit.fill,
+                  ),
                 ),
                 Container(
                   decoration: BoxDecoration(

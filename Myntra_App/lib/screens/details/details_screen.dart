@@ -24,3 +24,4 @@ class ProductDetailsArguments {
 
   ProductDetailsArguments({@required this.product});
 }
+
