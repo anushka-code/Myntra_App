@@ -23,16 +23,20 @@ This app built using Flutter has the following features -
 ## Demo Videos
 
 These are a few animations to show how the features work.
-| Home & Log In                              | Try-On                             |
-| ------------------------------------ | ------------------------------------ |
+| Home & Log In                       | Try-On                             |
+| ------------------------------------| ------------------------------------ |
 | ![](/demo_gifs/intro.gif) | ![](/demo_gifs/newTryOn.gif) |
 
-| One Day Tour (TSP)                              | Bar Code Scanner                             |
+| One Day Tour (TSP)                   | Bar Code Scanner                     |
 | ------------------------------------ | ------------------------------------ |
 | ![](/demo_gifs/map.gif) | ![](/demo_gifs/newBarCode.gif) |
 
-| Notifications                             | Analytics                             |
-| ------------------------------------ | ------------------------------------ |
-| ![](/demo_gifs/notification) | ![](/demo_gifs/analytics.gif) |
+| Analytics                            |
+| ------------------------------------ |
+| ![](/demo_gifs/analytics.gif) |
+| Notifications                       |
+| ------------------------------------|
+| ![](/demo_gifs/notification) |
+
 
 To run this project locally, clone it in your working directory, run `flutter pub get` or Get packages from pubspec.yaml and you are good to go!
