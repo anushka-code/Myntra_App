@@ -18,7 +18,7 @@ This app built using Flutter has the following features -
 
 4. Users will receive a **notification** whenever they are close to a store where an item from their try-on list is in stock.
 
-5. **Analytics** on two datasets for Customer behaviour analysis and demand forecasting using exploratory data analysis techniques and ARIIMA and Prophet models. This can help the retailers for inventory management and improving customer experience.
+5. **Analytics** on two datasets for Customer behaviour analysis and demand forecasting using exploratory data analysis techniques and ARIMA and Prophet models. This can help the retailers for inventory management and improving customer experience.
 
 ## Demo Videos
 
