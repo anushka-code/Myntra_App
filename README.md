@@ -1,4 +1,4 @@
-<p>
+<p align="center">
     <img alt="Myntra" src="/Myntra_App/assets/images/myntralogo.png" width="150">
 </p>
 
@@ -36,7 +36,7 @@ These are a few animations to show how the features work.
 | ![](/demo_gifs/analytics.gif) |
 | Notifications                       |
 | ------------------------------------|
-| ![](/demo_gifs/notification) |
+| ![](/demo_gifs/notification.gif) |
 
 
 To run this project locally, clone it in your working directory, run `flutter pub get` or Get packages from pubspec.yaml and you are good to go!
