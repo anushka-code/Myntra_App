@@ -164,8 +164,8 @@ List<Product> demoProducts = [
 const String description =
     "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
 
-List<Product> tryOnProducts = [demoProducts[0]];
-List<Product> offlineProducts = [demoProducts[0],demoProducts[6]];
+List<Product> tryOnProducts = [demoProducts[0],demoProducts[6]];
+List<Product> offlineProducts = [demoProducts[0]];
 void addTryOnProduct(Product product) {
   print(product.title);
   bool flag = false;
